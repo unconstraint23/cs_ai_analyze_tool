@@ -1,0 +1,297 @@
+/* ==========================================================================
+   Uiverse Design System (uiverse.io/design inspired)
+   Archetype: Dark Structural Telemetry + Uiverse Micro-Interaction Elements
+   ========================================================================== */
+
+:root {
+  --uv-canvas: #06080c;
+  --uv-surface: #0b0f16;
+  --uv-elevated: #111722;
+  --uv-hairline: rgba(148, 163, 184, 0.13);
+  --uv-ct: #00d4ff;
+  --uv-t: #ff9e00;
+  --uv-ok: #10f5a0;
+  --uv-danger: #ff3b5c;
+}
+
+/* 1. Architectural Telemetry Grid Backdrop */
+.uv-grid-stage {
+  background-color: var(--uv-canvas);
+  background-image:
+    radial-gradient(ellipse 75% 45% at 50% -10%, rgba(0, 212, 255, 0.08), transparent 70%),
+    linear-gradient(to right, rgba(148, 163, 184, 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(148, 163, 184, 0.035) 1px, transparent 1px);
+  background-size: 100% 100%, 32px 32px, 32px 32px;
+}
+
+/* 2. HUD Structural Panel with Corner Reticle Brackets */
+.uv-hud-panel {
+  position: relative;
+  background: linear-gradient(180deg, rgba(14, 20, 30, 0.94) 0%, rgba(9, 13, 20, 0.97) 100%);
+  border: 1px solid var(--uv-hairline);
+  box-shadow: 0 10px 30px -12px rgba(0, 0, 0, 0.75), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+.uv-hud-panel::before,
+.uv-hud-panel::after {
+  content: "";
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  pointer-events: none;
+  z-index: 10;
+  transition: border-color 0.25s ease, width 0.25s ease, height 0.25s ease;
+}
+
+.uv-hud-panel::before {
+  top: -1px;
+  left: -1px;
+  border-top: 2px solid rgba(0, 212, 255, 0.65);
+  border-left: 2px solid rgba(0, 212, 255, 0.65);
+}
+
+.uv-hud-panel::after {
+  bottom: -1px;
+  right: -1px;
+  border-bottom: 2px solid rgba(255, 158, 0, 0.55);
+  border-right: 2px solid rgba(255, 158, 0, 0.55);
+}
+
+.uv-hud-panel:hover::before {
+  width: 12px;
+  height: 12px;
+  border-color: var(--uv-ct);
+}
+
+.uv-hud-panel:hover::after {
+  width: 12px;
+  height: 12px;
+  border-color: var(--uv-t);
+}
+
+/* 3. Uiverse Spotlight Interactive Card (Mouse-tracking radial sheen) */
+.uv-spotlight-card {
+  position: relative;
+  overflow: hidden;
+  background: rgba(15, 21, 32, 0.82);
+  border: 1px solid rgba(148, 163, 184, 0.14);
+  transition: transform 0.18s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.18s ease, box-shadow 0.18s ease;
+}
+
+.uv-spotlight-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    260px circle at var(--spot-x, 50%) var(--spot-y, 50%),
+    rgba(0, 212, 255, 0.11),
+    transparent 65%
+  );
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+
+.uv-spotlight-card:hover::before {
+  opacity: 1;
+}
+
+.uv-spotlight-card:hover {
+  border-color: rgba(0, 212, 255, 0.38);
+  transform: translateY(-1px);
+}
+
+.uv-spotlight-card.uv-active-ct {
+  background: linear-gradient(90deg, rgba(0, 212, 255, 0.12) 0%, rgba(15, 22, 34, 0.92) 42%);
+  border-color: rgba(0, 212, 255, 0.72);
+  box-shadow: inset 3px 0 0 var(--uv-ct), 0 0 22px -6px rgba(0, 212, 255, 0.35);
+}
+
+.uv-spotlight-card.uv-active-t {
+  background: linear-gradient(90deg, rgba(255, 158, 0, 0.13) 0%, rgba(15, 22, 34, 0.92) 42%);
+  border-color: rgba(255, 158, 0, 0.75);
+  box-shadow: inset 3px 0 0 var(--uv-t), 0 0 22px -6px rgba(255, 158, 0, 0.35);
+}
+
+/* 4. Uiverse Animated Conic-Beam Tactical CTA Button */
+@keyframes uv-spin-beam {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+.uv-beam-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5px;
+  border-radius: 6px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.08);
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.2s ease;
+}
+
+.uv-beam-btn::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 240%;
+  aspect-ratio: 1 / 1;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg 200deg,
+    var(--uv-ct) 255deg,
+    var(--uv-t) 315deg,
+    transparent 360deg
+  );
+  animation: uv-spin-beam 3.4s linear infinite;
+}
+
+.uv-beam-btn:hover {
+  box-shadow: 0 0 20px -4px rgba(0, 212, 255, 0.5);
+  transform: translateY(-0.5px);
+}
+
+.uv-beam-btn:active {
+  transform: translateY(0.5px) scale(0.99);
+}
+
+.uv-beam-btn:disabled {
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+.uv-beam-btn-inner {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 31px;
+  padding: 0 13px;
+  border-radius: 4.5px;
+  background: linear-gradient(180deg, #111927 0%, #0a0f18 100%);
+  color: #f8fafc;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  transition: background 0.18s ease;
+}
+
+.uv-beam-btn:hover .uv-beam-btn-inner {
+  background: linear-gradient(180deg, #152235 0%, #0d1522 100%);
+}
+
+/* Amber Variant for Offensive / Execute Action */
+.uv-beam-btn.uv-beam-amber::before {
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg 190deg,
+    #ff9e00 260deg,
+    #ff3b5c 320deg,
+    transparent 360deg
+  );
+}
+
+.uv-beam-btn.uv-beam-amber:hover {
+  box-shadow: 0 0 20px -4px rgba(255, 158, 0, 0.5);
+}
+
+/* 5. Uiverse Shimmer Tag / Pill Switch */
+.uv-pill-switch {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  background: rgba(13, 18, 28, 0.8);
+  transition: all 0.2s ease;
+}
+
+.uv-pill-switch::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -120%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.09),
+    transparent
+  );
+  transform: skewX(-20deg);
+  transition: left 0.55s ease;
+}
+
+.uv-pill-switch:hover::after {
+  left: 140%;
+}
+
+/* 6. 2D Tactical Radar Scanning Sweep & Target Ping */
+@keyframes uv-radar-rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.uv-radar-sweep-cone {
+  transform-origin: 50px 50px;
+  animation: uv-radar-rotate 7.5s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes uv-target-pulse {
+  0% {
+    opacity: 0.75;
+    stroke-width: 0.45;
+  }
+  100% {
+    opacity: 0;
+    stroke-width: 1.5;
+  }
+}
+
+.uv-kill-ring {
+  animation: uv-target-pulse 2.2s ease-out infinite;
+  pointer-events: none;
+}
+
+/* 7. Live Telemetry Beacon Dot */
+@keyframes uv-beacon-ping {
+  0%, 100% {
+    opacity: 1;
+    box-shadow: 0 0 0 0 rgba(16, 245, 160, 0.65);
+  }
+  50% {
+    opacity: 0.75;
+    box-shadow: 0 0 0 5px rgba(16, 245, 160, 0);
+  }
+}
+
+.uv-live-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 9999px;
+  background-color: var(--uv-ok);
+  animation: uv-beacon-ping 2s infinite;
+}
+
+/* 8. Segmented Telemetry Meter Track */
+.uv-segmented-track {
+  background-image: repeating-linear-gradient(
+    90deg,
+    transparent 0px,
+    transparent 6px,
+    rgba(6, 8, 12, 0.65) 6px,
+    rgba(6, 8, 12, 0.65) 8px
+  );
+}
